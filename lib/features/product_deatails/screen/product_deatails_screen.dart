@@ -1,10 +1,10 @@
-import 'package:amazon_clone/common/widgets/custom_buttton.dart';
-import 'package:amazon_clone/common/widgets/rating.dart';
-import 'package:amazon_clone/constants/global_variables.dart';
-import 'package:amazon_clone/features/product_deatails/services/product_services.dart';
-import 'package:amazon_clone/features/search/screens/search_screen.dart';
-import 'package:amazon_clone/models/product_model.dart';
-import 'package:amazon_clone/providers/user_provider.dart';
+import 'package:RaithaSethu/common/widgets/custom_buttton.dart';
+import 'package:RaithaSethu/common/widgets/rating.dart';
+import 'package:RaithaSethu/constants/global_variables.dart';
+import 'package:RaithaSethu/features/product_deatails/services/product_services.dart';
+import 'package:RaithaSethu/features/search/screens/search_screen.dart';
+import 'package:RaithaSethu/models/product_model.dart';
+import 'package:RaithaSethu/providers/user_provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';

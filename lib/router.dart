@@ -1,16 +1,16 @@
-import 'package:amazon_clone/common/widgets/bottom_bar.dart';
-import 'package:amazon_clone/features/address/screens/address_screen.dart';
-import 'package:amazon_clone/features/admin/screen/add_product_screen.dart';
-import 'package:amazon_clone/features/admin/screen/admin_screen.dart';
-import 'package:amazon_clone/features/auth/screens/farmer_auth.dart';
-import 'package:amazon_clone/features/auth/screens/user_auth.dart';
-import 'package:amazon_clone/features/home/screen/category_deals.dart.dart';
-import 'package:amazon_clone/features/home/screen/home_screen.dart';
-import 'package:amazon_clone/features/order_details/screeens/order_detailsScreen.dart';
-import 'package:amazon_clone/features/product_deatails/screen/product_deatails_screen.dart';
-import 'package:amazon_clone/features/search/screens/search_screen.dart';
-import 'package:amazon_clone/models/order.dart';
-import 'package:amazon_clone/models/product_model.dart';
+import 'package:RaithaSethu/common/widgets/bottom_bar.dart';
+import 'package:RaithaSethu/features/address/screens/address_screen.dart';
+import 'package:RaithaSethu/features/admin/screen/add_product_screen.dart';
+import 'package:RaithaSethu/features/admin/screen/admin_screen.dart';
+import 'package:RaithaSethu/features/auth/screens/farmer_auth.dart';
+import 'package:RaithaSethu/features/auth/screens/user_auth.dart';
+import 'package:RaithaSethu/features/home/screen/category_deals.dart.dart';
+import 'package:RaithaSethu/features/home/screen/home_screen.dart';
+import 'package:RaithaSethu/features/order_details/screeens/order_detailsScreen.dart';
+import 'package:RaithaSethu/features/product_deatails/screen/product_deatails_screen.dart';
+import 'package:RaithaSethu/features/search/screens/search_screen.dart';
+import 'package:RaithaSethu/models/order.dart';
+import 'package:RaithaSethu/models/product_model.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {

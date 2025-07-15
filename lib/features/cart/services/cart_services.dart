@@ -1,17 +1,16 @@
 import 'dart:convert';
 
-import 'package:amazon_clone/constants/error_handling.dart';
-import 'package:amazon_clone/constants/global_variables.dart';
-import 'package:amazon_clone/constants/utils.dart';
-import 'package:amazon_clone/models/product_model.dart';
-import 'package:amazon_clone/models/usermodel.dart';
-import 'package:amazon_clone/providers/user_provider.dart';
+import 'package:RaithaSethu/constants/error_handling.dart';
+import 'package:RaithaSethu/constants/global_variables.dart';
+import 'package:RaithaSethu/constants/utils.dart';
+import 'package:RaithaSethu/models/product_model.dart';
+import 'package:RaithaSethu/models/usermodel.dart';
+import 'package:RaithaSethu/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 class CartServices {
-
   void DeleteFormCart({
     required BuildContext context,
     required ProductModel product,
@@ -39,5 +38,4 @@ class CartServices {
       print(e);
     }
   }
-  
 }

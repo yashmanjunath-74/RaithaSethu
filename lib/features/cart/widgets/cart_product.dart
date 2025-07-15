@@ -1,7 +1,7 @@
-import 'package:amazon_clone/features/cart/services/cart_services.dart';
-import 'package:amazon_clone/features/product_deatails/services/product_services.dart';
-import 'package:amazon_clone/models/product_model.dart';
-import 'package:amazon_clone/providers/user_provider.dart';
+import 'package:RaithaSethu/features/cart/services/cart_services.dart';
+import 'package:RaithaSethu/features/product_deatails/services/product_services.dart';
+import 'package:RaithaSethu/models/product_model.dart';
+import 'package:RaithaSethu/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

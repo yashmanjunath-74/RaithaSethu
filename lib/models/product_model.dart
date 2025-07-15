@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:amazon_clone/models/rating.dart';
+import 'package:RaithaSethu/models/rating.dart';
 
 class ProductModel {
   final String productName;
   final double price;
   final double quantity;
   final String description;
-  final String category;// New: Type of crop
+  final String category; // New: Type of crop
   final List<String> images;
   final String? id;
   final List<RatingModel>? rating;

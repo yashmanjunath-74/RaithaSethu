@@ -1,4 +1,4 @@
-import 'package:amazon_clone/models/farmermodel.dart';
+import 'package:RaithaSethu/models/farmermodel.dart';
 import 'package:flutter/material.dart';
 
 class FarmerProvider extends ChangeNotifier {

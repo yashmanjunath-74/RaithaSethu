@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:amazon_clone/constants/error_handling.dart';
-import 'package:amazon_clone/constants/global_variables.dart';
-import 'package:amazon_clone/constants/utils.dart';
-import 'package:amazon_clone/models/product_model.dart';
-import 'package:amazon_clone/providers/user_provider.dart';
+import 'package:RaithaSethu/constants/error_handling.dart';
+import 'package:RaithaSethu/constants/global_variables.dart';
+import 'package:RaithaSethu/constants/utils.dart';
+import 'package:RaithaSethu/models/product_model.dart';
+import 'package:RaithaSethu/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -49,14 +49,13 @@ class HomeService {
       {required BuildContext context}) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     ProductModel product = ProductModel(
-        productName: '',
-        price: 0,
-        quantity: 0,
-        description: '',
-        category: '',
-        images: [],
-        farmerId: '', // Provide a default or appropriate value
-    
+      productName: '',
+      price: 0,
+      quantity: 0,
+      description: '',
+      category: '',
+      images: [],
+      farmerId: '', // Provide a default or appropriate value
     );
     try {
       http.Response res = await http.get(

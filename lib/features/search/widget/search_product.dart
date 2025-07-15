@@ -1,5 +1,5 @@
-import 'package:amazon_clone/common/widgets/rating.dart';
-import 'package:amazon_clone/models/product_model.dart';
+import 'package:RaithaSethu/common/widgets/rating.dart';
+import 'package:RaithaSethu/models/product_model.dart';
 import 'package:flutter/material.dart';
 
 class SearchProduct extends StatelessWidget {

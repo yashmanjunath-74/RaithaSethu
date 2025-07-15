@@ -1,8 +1,8 @@
-import 'package:amazon_clone/common/widgets/loader.dart';
-import 'package:amazon_clone/constants/global_variables.dart';
-import 'package:amazon_clone/features/home/service/home_service.dart';
-import 'package:amazon_clone/features/product_deatails/screen/product_deatails_screen.dart';
-import 'package:amazon_clone/models/product_model.dart';
+import 'package:RaithaSethu/common/widgets/loader.dart';
+import 'package:RaithaSethu/constants/global_variables.dart';
+import 'package:RaithaSethu/features/home/service/home_service.dart';
+import 'package:RaithaSethu/features/product_deatails/screen/product_deatails_screen.dart';
+import 'package:RaithaSethu/models/product_model.dart';
 import 'package:flutter/material.dart';
 
 class CategoryDeals extends StatefulWidget {

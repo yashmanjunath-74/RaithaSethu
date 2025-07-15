@@ -1,11 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.amazon_clone">
+    package="com.example.RaithaSethu">
 
     <!-- ✅ Internet Permission (Must be inside <manifest>) -->
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:label="amazon_clone"
+        android:label="RaithaSethu"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">  <!-- ✅ This must be inside <application> -->

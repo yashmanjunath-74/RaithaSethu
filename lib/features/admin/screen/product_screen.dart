@@ -1,8 +1,8 @@
-import 'package:amazon_clone/common/widgets/loader.dart';
-import 'package:amazon_clone/features/account/widgets/single_product.dart';
-import 'package:amazon_clone/features/admin/screen/add_product_screen.dart';
-import 'package:amazon_clone/features/admin/services/farmer_services.dart';
-import 'package:amazon_clone/models/product_model.dart';
+import 'package:RaithaSethu/common/widgets/loader.dart';
+import 'package:RaithaSethu/features/account/widgets/single_product.dart';
+import 'package:RaithaSethu/features/admin/screen/add_product_screen.dart';
+import 'package:RaithaSethu/features/admin/services/farmer_services.dart';
+import 'package:RaithaSethu/models/product_model.dart';
 import 'package:flutter/material.dart';
 
 class ProductScreen extends StatefulWidget {

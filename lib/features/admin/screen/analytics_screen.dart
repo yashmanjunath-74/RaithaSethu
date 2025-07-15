@@ -1,7 +1,7 @@
-import 'package:amazon_clone/common/widgets/loader.dart';
-import 'package:amazon_clone/features/admin/models/sales.dart';
-import 'package:amazon_clone/features/admin/services/farmer_services.dart';
-import 'package:amazon_clone/features/admin/widgets/category_products_charts.dart';
+import 'package:RaithaSethu/common/widgets/loader.dart';
+import 'package:RaithaSethu/features/admin/models/sales.dart';
+import 'package:RaithaSethu/features/admin/services/farmer_services.dart';
+import 'package:RaithaSethu/features/admin/widgets/category_products_charts.dart';
 import 'package:flutter/material.dart';
 
 class AnalyticsScreen extends StatefulWidget {

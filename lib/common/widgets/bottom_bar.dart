@@ -1,9 +1,9 @@
-import 'package:amazon_clone/constants/global_variables.dart';
-import 'package:amazon_clone/features/account/screens/account_screen.dart';
-import 'package:amazon_clone/features/auth/services/auth_service.dart';
-import 'package:amazon_clone/features/cart/screens/cartscreen.dart';
-import 'package:amazon_clone/features/home/screen/home_screen.dart';
-import 'package:amazon_clone/providers/user_provider.dart';
+import 'package:RaithaSethu/constants/global_variables.dart';
+import 'package:RaithaSethu/features/account/screens/account_screen.dart';
+import 'package:RaithaSethu/features/auth/services/auth_service.dart';
+import 'package:RaithaSethu/features/cart/screens/cartscreen.dart';
+import 'package:RaithaSethu/features/home/screen/home_screen.dart';
+import 'package:RaithaSethu/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:provider/provider.dart';

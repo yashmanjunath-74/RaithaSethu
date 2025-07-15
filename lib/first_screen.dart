@@ -1,11 +1,11 @@
-import 'package:amazon_clone/common/widgets/bottom_bar.dart';
-import 'package:amazon_clone/constants/global_variables.dart';
-import 'package:amazon_clone/common/widgets/custom_buttton.dart';
-import 'package:amazon_clone/features/admin/screen/admin_screen.dart';
-import 'package:amazon_clone/features/auth/screens/farmer_auth.dart';
-import 'package:amazon_clone/features/auth/screens/user_auth.dart';
-import 'package:amazon_clone/providers/farmer_provider.dart';
-import 'package:amazon_clone/providers/user_provider.dart';
+import 'package:RaithaSethu/common/widgets/bottom_bar.dart';
+import 'package:RaithaSethu/constants/global_variables.dart';
+import 'package:RaithaSethu/common/widgets/custom_buttton.dart';
+import 'package:RaithaSethu/features/admin/screen/admin_screen.dart';
+import 'package:RaithaSethu/features/auth/screens/farmer_auth.dart';
+import 'package:RaithaSethu/features/auth/screens/user_auth.dart';
+import 'package:RaithaSethu/providers/farmer_provider.dart';
+import 'package:RaithaSethu/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

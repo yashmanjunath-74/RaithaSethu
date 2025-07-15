@@ -1,9 +1,9 @@
-import 'package:amazon_clone/constants/global_variables.dart';
-import 'package:amazon_clone/features/cart/widgets/cart_product.dart';
-import 'package:amazon_clone/features/cart/widgets/cart_subtotal.dart';
-import 'package:amazon_clone/features/home/widgets/address_box.dart';
-import 'package:amazon_clone/features/search/screens/search_screen.dart';
-import 'package:amazon_clone/providers/user_provider.dart';
+import 'package:RaithaSethu/constants/global_variables.dart';
+import 'package:RaithaSethu/features/cart/widgets/cart_product.dart';
+import 'package:RaithaSethu/features/cart/widgets/cart_subtotal.dart';
+import 'package:RaithaSethu/features/home/widgets/address_box.dart';
+import 'package:RaithaSethu/features/search/screens/search_screen.dart';
+import 'package:RaithaSethu/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

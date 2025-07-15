@@ -1,7 +1,7 @@
-import 'package:amazon_clone/constants/global_variables.dart';
-import 'package:amazon_clone/features/account/widgets/below_app_bar.dart';
-import 'package:amazon_clone/features/account/widgets/orders.dart';
-import 'package:amazon_clone/features/account/widgets/top_botton.dart';
+import 'package:RaithaSethu/constants/global_variables.dart';
+import 'package:RaithaSethu/features/account/widgets/below_app_bar.dart';
+import 'package:RaithaSethu/features/account/widgets/orders.dart';
+import 'package:RaithaSethu/features/account/widgets/top_botton.dart';
 import 'package:flutter/material.dart';
 
 class AccountScreen extends StatelessWidget {
@@ -47,7 +47,7 @@ class AccountScreen extends StatelessWidget {
       ),
       body: Column(
         children: const [
-          BelowAppBar(), 
+          BelowAppBar(),
           SizedBox(
             height: 10,
           ),

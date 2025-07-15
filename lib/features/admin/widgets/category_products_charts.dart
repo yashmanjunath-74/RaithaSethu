@@ -1,4 +1,4 @@
-import 'package:amazon_clone/features/admin/models/sales.dart';
+import 'package:RaithaSethu/features/admin/models/sales.dart';
 import 'package:fl_chart/fl_chart.dart' as fi;
 import 'package:flutter/material.dart';
 

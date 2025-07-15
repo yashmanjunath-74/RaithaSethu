@@ -1,9 +1,9 @@
-import 'package:amazon_clone/common/widgets/custom_buttton.dart';
-import 'package:amazon_clone/constants/global_variables.dart';
-import 'package:amazon_clone/features/admin/services/farmer_services.dart';
-import 'package:amazon_clone/features/search/screens/search_screen.dart';
-import 'package:amazon_clone/models/order.dart';
-import 'package:amazon_clone/providers/farmer_provider.dart';
+import 'package:RaithaSethu/common/widgets/custom_buttton.dart';
+import 'package:RaithaSethu/constants/global_variables.dart';
+import 'package:RaithaSethu/features/admin/services/farmer_services.dart';
+import 'package:RaithaSethu/features/search/screens/search_screen.dart';
+import 'package:RaithaSethu/models/order.dart';
+import 'package:RaithaSethu/providers/farmer_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';

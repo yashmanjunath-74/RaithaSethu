@@ -1,11 +1,11 @@
-import 'package:amazon_clone/constants/global_variables.dart';
-import 'package:amazon_clone/features/account/services/account_services.dart';
-import 'package:amazon_clone/features/admin/screen/analytics_screen.dart';
-import 'package:amazon_clone/features/admin/screen/orders_screen.dart';
-import 'package:amazon_clone/features/admin/screen/product_screen.dart';
+import 'package:RaithaSethu/constants/global_variables.dart';
+import 'package:RaithaSethu/features/account/services/account_services.dart';
+import 'package:RaithaSethu/features/admin/screen/analytics_screen.dart';
+import 'package:RaithaSethu/features/admin/screen/orders_screen.dart';
+import 'package:RaithaSethu/features/admin/screen/product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:amazon_clone/providers/farmer_provider.dart';
+import 'package:RaithaSethu/providers/farmer_provider.dart';
 
 class AdminScreen extends StatefulWidget {
   static const String routeName = '/admin-screen';

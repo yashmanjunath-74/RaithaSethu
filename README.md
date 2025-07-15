@@ -1,4 +1,4 @@
-# amazon_clone
+# RaithaSethu
 
 A new Flutter project.
 

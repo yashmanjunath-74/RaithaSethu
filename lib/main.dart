@@ -1,10 +1,10 @@
-import 'package:amazon_clone/constants/global_variables.dart';
-import 'package:amazon_clone/first_screen.dart';
-import 'package:amazon_clone/features/auth/services/auth_service.dart';
-import 'package:amazon_clone/providers/farmer_provider.dart';
-import 'package:amazon_clone/providers/user_provider.dart';
+import 'package:RaithaSethu/constants/global_variables.dart';
+import 'package:RaithaSethu/first_screen.dart';
+import 'package:RaithaSethu/features/auth/services/auth_service.dart';
+import 'package:RaithaSethu/providers/farmer_provider.dart';
+import 'package:RaithaSethu/providers/user_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:amazon_clone/router.dart';
+import 'package:RaithaSethu/router.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
