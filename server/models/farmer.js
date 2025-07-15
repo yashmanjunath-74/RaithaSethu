@@ -44,6 +44,10 @@ const FarmerSchema = new mongoose.Schema({
         },
         trim: true,
     },
+    token: {
+        type: String,
+        default: null,
+    },
     products: [productSchema],
  
 });

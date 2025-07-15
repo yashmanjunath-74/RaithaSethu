@@ -75,10 +75,9 @@ class FarmerAuthService {
         onSuccess: () async {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setString(
-              'x-farmer-auth-password', jsonDecode(res.body)['token']);
+              'x-farmer-auth-token', jsonDecode(res.body)['token']);
           print("Token saved: ${jsonDecode(res.body)['token']}");
-          Navigator.pushNamedAndRemoveUntil(
-              context, AdminScreen.routeName, (route) => false);
+          FarmerAuthService().getFarmer(context);
         },
       );
     } catch (e) {
@@ -92,12 +91,16 @@ class FarmerAuthService {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('x-farmer-auth-token');
+      if (token == null) {
+        print("No token found, skipping getFarmer.");
+        return;
+      }
       print("Token retrieved: $token");
       var tokenRes = await http.post(
         Uri.parse('$uri/api/farmer/tokenIsValid'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'x-farmer-auth-token': token!
+          'x-farmer-auth-token': token
         },
       );
       var response = jsonDecode(tokenRes.body);
@@ -110,9 +113,15 @@ class FarmerAuthService {
             'x-farmer-auth-token': token
           },
         );
+        print("Farmer API Response: ${farmerRes.body}");
         var farmerProvider =
             Provider.of<FarmerProvider>(context, listen: false);
         farmerProvider.setFarmer(farmerRes.body);
+        print("Farmer data set in provider: ${farmerProvider.farmer.token}");
+
+        
+        Navigator.pushNamedAndRemoveUntil(
+            context, AdminScreen.routeName, (route) => false);
       }
     } catch (e) {
       print(e.toString());

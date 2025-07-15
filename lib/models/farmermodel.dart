@@ -25,7 +25,7 @@ class FarmerModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      '_id': id, // Use '_id' to match API
       'name': name,
       'email': email,
       'address': address,
@@ -38,7 +38,7 @@ class FarmerModel {
 
   factory FarmerModel.fromMap(Map<String, dynamic> map) {
     return FarmerModel(
-      id: map['id'] ?? '',
+      id: map['_id'] ?? '',
       name: map['name'] ?? '',
       email: map['email'] ?? '',
       password: map['password'] ?? '',

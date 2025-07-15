@@ -27,7 +27,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   final _AddProductFromKey = GlobalKey<FormState>();
 
-  String categary = 'Mobiles';
+  String categary = 'Food';
 
   List<File> images = [];
   DateTime? expectedHarvestDate;
@@ -43,11 +43,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
   }
 
   List<String> productCategories = [
-    'Mobiles',
-    'Essentials',
-    'Appliances',
-    'Books',
-    'Fashion'
+    'Food',
+    'Feed',
+    'Fiber Crops',
+    'Oil Seeds',
+    'Industrial',
   ];
 
   void pickHarvestDate() async {
@@ -66,6 +66,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   void sellProduct() {
     if (_AddProductFromKey.currentState!.validate() && images.isNotEmpty) {
+      if (expectedHarvestDate == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Please select the expected harvest date.')),
+        );
+        return;
+      }
       farmerServices.sellProduct(
         context: context,
         productName: productNameController.text,
@@ -74,7 +80,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
         description: descriptionController.text,
         category: categary,
         images: images,
-        expectedHarvestDate: expectedHarvestDate!, // Pass date
+        expectedHarvestDate: expectedHarvestDate!,
       );
     }
   }

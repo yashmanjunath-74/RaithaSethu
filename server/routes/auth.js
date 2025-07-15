@@ -84,15 +84,25 @@ authRouter.get('/',Auth ,async(req,res) =>{
 // Farmer Sign Up
 authRouter.post('/api/farmer/signup', async (req, res) => {
   try {
-    const { name, email, phone,password,address } = req.body;
+    const { name, email, phone, password, address } = req.body;
+
     const existingFarmer = await Farmer.findOne({ email });
     if (existingFarmer) {
       return res.status(400).json({ message: 'Farmer with same email already exists' });
     }
-    const token = jwt.sign({ id: email }, "passwordKey");
-    let farmer = new Farmer({ name, email, phone, password,address});
+
+    const hashPassword = await bcryptjs.hash(password, 10);
+
+    let farmer = new Farmer({
+      name,
+      email,
+      phone,
+      password: hashPassword,
+      address,
+    });
+
     farmer = await farmer.save();
-    res.status(201).json({ token, ...farmer._doc });
+    res.status(201).json(farmer);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -106,8 +116,13 @@ authRouter.post('/api/farmer/login', async (req, res) => {
     if (!farmer) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
+    const isMtch = await bcryptjs.compare(password, farmer.password);
+
+    if (!isMtch){
+      return res.status(400).json({message : "Incorect pasward!"});
+    }
     const token = jwt.sign({ id: farmer._id }, "passwordKey");
-    farmer.token = token;
+     farmer.token = token;
     await farmer.save();
     res.json({ token, ...farmer._doc });
   } catch (e) {
@@ -150,5 +165,7 @@ authRouter.get('/farmer', async (req, res) => {
     res.status(500).json({ error: e.message });
   }
 });
+
+
 
 module.exports = authRouter;

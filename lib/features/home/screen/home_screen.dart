@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Radius.circular(7),
                             ),
                           ),
-                          hintText: 'Search Amazon.in',
+                          hintText: 'Search RaithaSethu.in',
                           helperStyle: const TextStyle(
                               fontWeight: FontWeight.w500, fontSize: 17),
                         ),

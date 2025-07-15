@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const Farmer = require('../models/farmer');
 
+
 const FarmerAuth = async (req, res, next) => {
     try {
         const token = req.header('x-farmer-auth-token');
@@ -11,7 +12,7 @@ const FarmerAuth = async (req, res, next) => {
         if (!verified)
             return res.status(401).json({ message: "Token verification failed, access denied" });
 
-        const farmer = await Farmer.findOne({ _id: verified.id, token: token });
+        const farmer = await Farmer.findById(verified.id);
         if (!farmer)
             return res.status(401).json({ message: "Farmer not found, access denied" });
 

@@ -33,6 +33,7 @@ try{
 
 adminRouter.get('/admin/get-product',farmer, async (req,res)=>{
  try{
+   console.log(req.query.farmerId);
   const product = await Product.find({ farmerId: req.query.farmerId });
   res.json(product);
  }catch(e){
@@ -41,7 +42,7 @@ adminRouter.get('/admin/get-product',farmer, async (req,res)=>{
      
 });
 
-adminRouter.post('/admin/delete-product',admin, async(req,res)=>{
+adminRouter.post('/admin/delete-product',farmer, async(req,res)=>{
  try{ 
     const{ id } = req.body;
     let product = await Product.findByIdAndDelete(id);
@@ -51,18 +52,19 @@ adminRouter.post('/admin/delete-product',admin, async(req,res)=>{
     res.status(500).json({error:e.message});
  }
 });
+adminRouter.get('/admin/get-orders-by-farmer', farmer, async (req, res) => {
+   try {
+      const { farmerId } = req.query;
+      const orders = await Order.find({ 'products.product.farmerId': farmerId });
+      res.json(orders);
+   } catch (e) {
+      res.status(500).json({ error: e.message });
+   }
+});
 
-adminRouter.get('/admin/get-orders',admin, async(req,res)=>{
-    try{ 
-       const orders = await Order.find({});
-       res.json(orders);  
-    }catch(e){
-       res.status(500).json({error:e.message});
-    }
-   });
 
 
-   adminRouter.post('/admin/change-order-status',admin, async(req,res)=>{
+   adminRouter.post('/admin/change-order-status',farmer, async(req,res)=>{
       try{ 
          const {id ,Status} = req.body;
          let order = await Order.findById(id);
@@ -74,9 +76,10 @@ adminRouter.get('/admin/get-orders',admin, async(req,res)=>{
       }
      });
 
-   adminRouter.get('/admin/analytics',admin, async(req,res)=>{
+   adminRouter.get('/admin/analytics',farmer, async(req,res)=>{
       try{
-         const orders = await Order.find({});
+         const { farmerId } = req.query;
+         const orders = await Order.find({'products.product.farmerId': farmerId});
           let totalEarnings  = 0;
 
           for(let i =0 ; i< orders.length; i++){

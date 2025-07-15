@@ -13,8 +13,8 @@ class AddressBox extends StatelessWidget {
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Color.fromARGB(225, 114, 226, 221),
-            Color.fromARGB(225, 162, 236, 233)
+            Color.fromARGB(223, 38, 202, 60),
+            Color.fromARGB(224, 162, 236, 168)
           ],
           stops: [0.5, 1.0],
         ),

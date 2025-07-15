@@ -162,7 +162,7 @@ class _ProductDeatailsScreenState extends State<ProductDeatailsScreen> {
                         fontWeight: FontWeight.bold),
                     children: [
                       TextSpan(
-                        text: '\u{20B9}${widget.product.price}',
+                        text: '\u{20B9}${widget.product.price} per kg',
                         style: TextStyle(
                           color: Colors.red,
                           fontSize: 22,
@@ -170,6 +170,33 @@ class _ProductDeatailsScreenState extends State<ProductDeatailsScreen> {
                         ),
                       ),
                     ]),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Text(
+                'Expected Harvest Date: ${widget.product.expectedHarvestDate}',
+                style: TextStyle(fontSize: 16, color: Colors.green),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Text(
+                'Total avilable : ${widget.product.quantity} kg',
+                style: TextStyle(fontSize: 16, color: Colors.blue[600]),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Text(
+                'Description',
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
             ),
             Padding(

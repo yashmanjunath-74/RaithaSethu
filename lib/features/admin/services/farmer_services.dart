@@ -8,7 +8,6 @@ import 'package:amazon_clone/features/admin/models/sales.dart';
 import 'package:amazon_clone/models/order.dart';
 import 'package:amazon_clone/models/product_model.dart';
 import 'package:amazon_clone/providers/farmer_provider.dart';
-import 'package:amazon_clone/providers/user_provider.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -53,6 +52,8 @@ class FarmerServices {
       }
       print("Payload: $imageUrl");
 
+      print('Token: ${farmerProvider.farmer.id}');
+
       ProductModel product = ProductModel(
         productName: productName,
         price: price,
@@ -64,6 +65,7 @@ class FarmerServices {
         expectedHarvestDate: expectedHarvestDate, // Pass date
       );
       print("Payload: ${product.toJson()}");
+      print('Token: ${farmerProvider.farmer.id}');
 
       http.Response res = await http.post(
         Uri.parse('$uri/admin/add-product'),
@@ -73,6 +75,7 @@ class FarmerServices {
         },
         body: product.toJson(),
       );
+      print('Token: ${farmerProvider.farmer.token}');
 
       httpErrorHandle(
           response: res,
@@ -89,11 +92,12 @@ class FarmerServices {
   //get all Product
   Future<List<ProductModel>> fetchAllproduct(BuildContext context) async {
     final farmerProvider = Provider.of<FarmerProvider>(context, listen: false);
-    var farmer_id = farmerProvider.farmer.id;
+    var farmerId = farmerProvider.farmer.id; // Use camelCase
     List<ProductModel> productList = [];
     try {
+      print('Token: ${farmerProvider.farmer.token}');
       http.Response res = await http.get(
-        Uri.parse('$uri/admin/get-product?farmer_id=$farmer_id'),
+        Uri.parse('$uri/admin/get-product?farmerId=$farmerId'), // <-- fix here
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'x-farmer-auth-token': farmerProvider.farmer.token,
@@ -124,13 +128,13 @@ class FarmerServices {
     required ProductModel Product,
     required VoidCallback Onsuccess,
   }) async {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final farmerprovider = Provider.of<FarmerProvider>(context, listen: false);
     try {
       http.Response res = await http.post(
         Uri.parse('$uri/admin/delete-product'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'x-farmer-auth-token': userProvider.user.token,
+          'x-farmer-auth-token': farmerprovider.farmer.token,
         },
         body: jsonEncode({
           'id': Product.id,
@@ -148,33 +152,37 @@ class FarmerServices {
     }
   }
 
-  Future<List<Order>> fetchAllOrders(BuildContext context) async {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
+  // Fetch all orders for a specific farmer
+  Future<List<Order>> fetchOrdersByFarmer(BuildContext context) async {
+    final farmerProvider = Provider.of<FarmerProvider>(context, listen: false);
+    final farmerId = farmerProvider.farmer.id; // Use camelCase
+    print('Farmer ID used for orders: $farmerId');
+    print('Farmer Token: ${farmerProvider.farmer.token}');
     List<Order> orderList = [];
     try {
       http.Response res = await http.get(
-        Uri.parse('$uri/admin/get-orders'),
+        Uri.parse('$uri/admin/get-orders-by-farmer?farmerId=$farmerId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'x-farmer-auth-token': userProvider.user.token,
+          'x-farmer-auth-token': farmerProvider.farmer.token,
         },
       );
       httpErrorHandle(
-          response: res,
-          context: context,
-          onSuccess: () {
-            for (int i = 0; i < jsonDecode(res.body).length; i++) {
-              orderList.add(
-                Order.fromJson(
-                  jsonEncode(
-                    jsonDecode(res.body)[i],
-                  ),
+        response: res,
+        context: context,
+        onSuccess: () {
+          for (int i = 0; i < jsonDecode(res.body).length; i++) {
+            orderList.add(
+              Order.fromJson(
+                jsonEncode(
+                  jsonDecode(res.body)[i],
                 ),
-              );
-            }
-          });
+              ),
+            );
+          }
+        },
+      );
     } catch (e) {
-      print(e.toString);
       showSnackBar(context, e.toString());
     }
     return orderList;
@@ -186,13 +194,13 @@ class FarmerServices {
     required Order order,
     required VoidCallback Onsuccess,
   }) async {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final farmerProvider = Provider.of<FarmerProvider>(context, listen: false);
     try {
       http.Response res = await http.post(
         Uri.parse('$uri/admin/change-order-status'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'x-auth-token': userProvider.user.token,
+          'x-auth-token': farmerProvider.farmer.token,
         },
         body: jsonEncode({'id': order.id, 'Status': Status}),
       );
@@ -208,17 +216,19 @@ class FarmerServices {
     }
   }
 
+// Get earnings and sales data
   Future<Map<String, dynamic>> getEarnings(BuildContext context) async {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final farmerProvider = Provider.of<FarmerProvider>(context, listen: false);
     List<Sales> sales = [];
     int totalEarnings = 0;
+    var farmerId = farmerProvider.farmer.id; // Use camelCase
 
     try {
       http.Response res = await http.get(
-        Uri.parse('$uri/admin/analytics'),
+        Uri.parse('$uri/admin/analytics?farmerId=$farmerId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'x-farmer-auth-token': userProvider.user.token,
+          'x-farmer-auth-token': farmerProvider.farmer.token,
         },
       );
       httpErrorHandle(

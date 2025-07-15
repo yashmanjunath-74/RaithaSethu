@@ -3,8 +3,9 @@ import 'package:amazon_clone/features/account/services/account_services.dart';
 import 'package:amazon_clone/features/admin/screen/analytics_screen.dart';
 import 'package:amazon_clone/features/admin/screen/orders_screen.dart';
 import 'package:amazon_clone/features/admin/screen/product_screen.dart';
-import 'package:amazon_clone/features/auth/services/farmer_Authservices.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:amazon_clone/providers/farmer_provider.dart';
 
 class AdminScreen extends StatefulWidget {
   static const String routeName = '/admin-screen';
@@ -15,8 +16,6 @@ class AdminScreen extends StatefulWidget {
 }
 
 class _AdminScreenState extends State<AdminScreen> {
-  final FarmerAuthService farmerAuthService = FarmerAuthService();
-
   int _page = 0;
   double bottomBarwidth = 48;
   double bottomBarBorderWidth = 5;
@@ -33,10 +32,10 @@ class _AdminScreenState extends State<AdminScreen> {
     OrdersScreen(),
   ];
 
-  @override
   void initState() {
     super.initState();
-    farmerAuthService.getFarmer(context);
+    final farmerProvider = Provider.of<FarmerProvider>(context, listen: false);
+    print('Farmer ID: ${farmerProvider.farmer.id}');
   }
 
   @override
@@ -56,8 +55,8 @@ class _AdminScreenState extends State<AdminScreen> {
                 alignment: Alignment.bottomLeft,
                 child: Image.asset(
                   'assets/images/logo.png',
-                  width: 55,
-                  height: 45,
+                  width: 100,
+                  height: 100,
                   //color: Colors.black,
                 ),
               ),
@@ -66,13 +65,17 @@ class _AdminScreenState extends State<AdminScreen> {
                   Container(
                     child: Text(
                       'Farmer',
-                      style:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                   Container(
                     alignment: Alignment.bottomRight,
                     child: IconButton(
+                      color: Colors.white,
                       icon: const Icon(Icons.logout_outlined),
                       onPressed: () {
                         AccountServices().logOut(context);
@@ -146,9 +149,7 @@ class _AdminScreenState extends State<AdminScreen> {
           ),
         ],
       ),
-      body: Expanded(
-        child: ListPages[_page],
-      ),
+      body: ListPages[_page],
     );
   }
 }

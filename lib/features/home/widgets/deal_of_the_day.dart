@@ -47,7 +47,10 @@ class _DealOfTheDayState extends State<DealOfTheDay> {
                       padding: const EdgeInsets.only(left: 10, top: 15),
                       child: const Text(
                         'Deal  of the day',
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
                       ),
                     ),
                     Image.network(

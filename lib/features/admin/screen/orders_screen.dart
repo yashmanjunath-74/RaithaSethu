@@ -24,7 +24,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
   }
 
   fetchOrders() async {
-    ordersList = await farmerServices.fetchAllOrders(context);
+    ordersList = await farmerServices.fetchOrdersByFarmer(context);
     setState(() {});
   }
 
