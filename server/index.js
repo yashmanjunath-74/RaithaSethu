@@ -12,7 +12,7 @@ const userRouter = require('./routes/user');
 // INIT
 const PORT =  3001;
 const app = express();
-const DB = "mongodb+srv://yashyashwanth7447:yash2005@cluster0.cvmbvtn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const DB = ;
 
 // MIDDELWARESrs
 app.use(express.json());

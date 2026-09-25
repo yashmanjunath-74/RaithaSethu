@@ -35,43 +35,86 @@ class _CategoryDealsState extends State<CategoryDeals> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50),
+        preferredSize: const Size.fromHeight(56),
         child: AppBar(
-            flexibleSpace: Container(
-              decoration:
-                  const BoxDecoration(gradient: GlobalVariables.appBarGradient),
+          flexibleSpace: Container(
+            decoration:
+                const BoxDecoration(gradient: GlobalVariables.appBarGradient),
+          ),
+          title: Text(
+            widget.categary,
+            style: const TextStyle(
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
             ),
-            title: Text(
-              widget.categary,
-              style: TextStyle(fontWeight: FontWeight.w400),
-            )),
+          ),
+          iconTheme: const IconThemeData(color: Colors.white),
+        ),
       ),
       body: productList.isEmpty
-          ? Loader()
-          : Column(
-              children: [
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    'keep shopping for ${widget.categary}',
-                    style: TextStyle(
-                      fontSize: 20,
+          ? const Loader()
+          : SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Header
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: GlobalVariables.primaryColor
+                                .withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(
+                                GlobalVariables.radiusSm),
+                          ),
+                          child: Icon(
+                            Icons.category_rounded,
+                            color: GlobalVariables.primaryColor,
+                            size: 20,
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.categary,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                                color: GlobalVariables.textPrimary,
+                              ),
+                            ),
+                            Text(
+                              '${productList.length} products available',
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: GlobalVariables.textSecondary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 170,
-                  child: GridView.builder(
-                      padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+
+                  // Product Grid
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: productList.length,
-                      scrollDirection: Axis.horizontal,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 1,
-                        childAspectRatio: 1.4,
-                        mainAxisSpacing: 10,
+                        crossAxisCount: 2,
+                        childAspectRatio: 0.72,
+                        mainAxisSpacing: 12,
+                        crossAxisSpacing: 12,
                       ),
                       itemBuilder: (context, index) {
                         var product = productList[index];
@@ -79,46 +122,71 @@ class _CategoryDealsState extends State<CategoryDeals> {
                           onTap: () => Navigator.pushNamed(
                               context, ProductDeatailsScreen.routeName,
                               arguments: product),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                child: DecoratedBox(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Colors.black12, width: 1.5),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(
+                                  GlobalVariables.radiusMd),
+                              boxShadow: GlobalVariables.softShadow,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Image
+                                Expanded(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(
+                                          GlobalVariables.radiusMd),
+                                      topRight: Radius.circular(
+                                          GlobalVariables.radiusMd),
+                                    ),
+                                    child: Image.network(
+                                      product.images[0],
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10),
-                                    child: Image.network(product.images[0]),
+                                ),
+                                // Info
+                                Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        product.productName,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: GlobalVariables.textPrimary,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        '₹${product.price}',
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700,
+                                          color: GlobalVariables.primaryColor,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.only(
-                                    left: 0, top: 5, right: 15),
-                                alignment: Alignment.topLeft,
-                                child: Text(
-                                  product.productName,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              Container(
-                                padding:
-                                    const EdgeInsets.only(left: 0, right: 15),
-                                alignment: Alignment.topLeft,
-                                child: Text(
-                                  product.price.toString(),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         );
-                      }),
-                )
-              ],
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                ],
+              ),
             ),
     );
   }

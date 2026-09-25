@@ -41,88 +41,155 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(60),
-          child: AppBar(
-            flexibleSpace: Container(
-              decoration:
-                  const BoxDecoration(gradient: GlobalVariables.appBarGradient),
-            ),
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 42,
-                    margin: EdgeInsets.only(left: 15),
-                    child: Material(
-                      borderRadius: BorderRadius.circular(7),
-                      elevation: 1,
-                      child: TextFormField(
-                        onFieldSubmitted: NavigateToSearchScreen,
-                        decoration: InputDecoration(
-                          prefixIcon: InkWell(
-                            onTap: () {},
-                            child: const Padding(
-                              padding: EdgeInsets.only(left: 6),
-                              child: Icon(
-                                Icons.search,
-                                color: Colors.black,
-                                size: 23,
-                              ),
-                            ),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                          contentPadding: EdgeInsets.only(top: 10),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(7),
-                            ),
-                          ),
-                          hintText: 'Search Amazon.in',
-                          helperStyle: const TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 17),
-                        ),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(64),
+        child: AppBar(
+          flexibleSpace: Container(
+            decoration:
+                const BoxDecoration(gradient: GlobalVariables.appBarGradient),
+          ),
+          title: Row(
+            children: [
+              Expanded(
+                child: Container(
+                  height: 44,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius:
+                        BorderRadius.circular(GlobalVariables.radiusMd),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.08),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: TextFormField(
+                    onFieldSubmitted: NavigateToSearchScreen,
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(
+                        Icons.search_rounded,
+                        color: GlobalVariables.textLight,
+                        size: 22,
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: const EdgeInsets.only(top: 11),
+                      border: OutlineInputBorder(
+                        borderRadius:
+                            BorderRadius.circular(GlobalVariables.radiusMd),
+                        borderSide: BorderSide.none,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius:
+                            BorderRadius.circular(GlobalVariables.radiusMd),
+                        borderSide: BorderSide.none,
+                      ),
+                      hintText: 'Search RaithaSethu',
+                      hintStyle: TextStyle(
+                        color: GlobalVariables.textLight,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                   ),
                 ),
-                Container(
-                  color: Colors.transparent,
-                  height: 42,
-                  margin: const EdgeInsets.symmetric(horizontal: 10),
-                  child: const Icon(
-                    Icons.mic_outlined,
-                    size: 25,
-                  ),
+              ),
+              const SizedBox(width: 12),
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.2),
+                  borderRadius:
+                      BorderRadius.circular(GlobalVariables.radiusMd),
                 ),
-              ],
-            ),
+                child: const Icon(
+                  Icons.mic_rounded,
+                  color: Colors.white,
+                  size: 22,
+                ),
+              ),
+            ],
           ),
         ),
-        body: productList == null
-            ? Loader()
-            : Column(
-                children: [
-                  AddressBox(),
-                  SizedBox(height: 10),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: productList!.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () => Navigator.pushNamed(
-                              context, ProductDeatailsScreen.routeName,
-                              arguments: productList![index]),
-                          child: SearchProduct(
-                            product: productList![index],
+      ),
+      body: productList == null
+          ? const Loader()
+          : productList!.isEmpty
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.search_off_rounded,
+                        size: 64,
+                        color: GlobalVariables.textLight,
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'No results found',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: GlobalVariables.textSecondary,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Try a different search term',
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: GlobalVariables.textLight,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : Column(
+                  children: [
+                    const AddressBox(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 10),
+                      child: Row(
+                        children: [
+                          Text(
+                            '${productList!.length} results',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: GlobalVariables.textSecondary,
+                            ),
                           ),
-                        );
-                      },
+                          Text(
+                            ' for "${widget.searchQuery}"',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: GlobalVariables.textLight,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  )
-                ],
-              ));
+                    Expanded(
+                      child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: productList!.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () => Navigator.pushNamed(
+                                context, ProductDeatailsScreen.routeName,
+                                arguments: productList![index]),
+                            child: SearchProduct(
+                              product: productList![index],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+    );
   }
 }

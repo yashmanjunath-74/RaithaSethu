@@ -19,8 +19,6 @@ class BottomBar extends StatefulWidget {
 class _BottomBarState extends State<BottomBar> {
   final AuthService authService = AuthService();
   int _page = 0;
-  double bottomBarwidth = 48;
-  double bottomBarBorderWidth = 5;
 
   void updatepage(int page) {
     setState(() {
@@ -45,67 +43,123 @@ class _BottomBarState extends State<BottomBar> {
     final userCartLen = context.watch<UserProvider>().user.cart.length;
     return Scaffold(
       body: ListPages[_page],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _page,
-        selectedItemColor: GlobalVariables.selectedNavBarColor,
-        unselectedItemColor: GlobalVariables.unselectedNavBarColor,
-        backgroundColor: GlobalVariables.backgroundColor,
-        iconSize: 28,
-        onTap: updatepage,
-        items: [
-          // Home
-          BottomNavigationBarItem(
-              label: '',
-              icon: Container(
-                width: bottomBarwidth,
-                decoration: BoxDecoration(
-                    border: Border(
-                        top: BorderSide(
-                            color: _page == 0
-                                ? GlobalVariables.selectedNavBarColor
-                                : GlobalVariables.backgroundColor,
-                            width: bottomBarBorderWidth))),
-                child: const Icon(Icons.home_outlined),
-              )
-              // Account
-              ),
-          BottomNavigationBarItem(
-            label: '',
-            icon: Container(
-              width: bottomBarwidth,
-              decoration: BoxDecoration(
-                  border: Border(
-                      top: BorderSide(
-                          color: _page == 1
-                              ? GlobalVariables.selectedNavBarColor
-                              : GlobalVariables.backgroundColor,
-                          width: bottomBarBorderWidth))),
-              child: const Icon(Icons.person_outline_outlined),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.06),
+              blurRadius: 20,
+              offset: const Offset(0, -4),
+            ),
+          ],
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _NavItem(
+                  icon: Icons.home_rounded,
+                  label: 'Home',
+                  isSelected: _page == 0,
+                  onTap: () => updatepage(0),
+                ),
+                _NavItem(
+                  icon: Icons.person_rounded,
+                  label: 'Account',
+                  isSelected: _page == 1,
+                  onTap: () => updatepage(1),
+                ),
+                _NavItem(
+                  icon: Icons.shopping_cart_rounded,
+                  label: 'Cart',
+                  isSelected: _page == 2,
+                  onTap: () => updatepage(2),
+                  badgeCount: userCartLen,
+                ),
+              ],
             ),
           ),
-          // Cart
-          BottomNavigationBarItem(
-              label: '',
-              icon: badges.Badge(
-                badgeContent: Text(
-                  userCartLen.toString(),
-                  style: TextStyle(color: Colors.white),
+        ),
+      ),
+    );
+  }
+}
+
+class _NavItem extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
+  final int badgeCount;
+
+  const _NavItem({
+    required this.icon,
+    required this.label,
+    required this.isSelected,
+    required this.onTap,
+    this.badgeCount = 0,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    Widget iconWidget = Icon(
+      icon,
+      size: 24,
+      color: isSelected
+          ? GlobalVariables.primaryColor
+          : GlobalVariables.unselectedNavBarColor,
+    );
+
+    if (badgeCount > 0) {
+      iconWidget = badges.Badge(
+        badgeContent: Text(
+          badgeCount.toString(),
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 10,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        badgeStyle: const badges.BadgeStyle(
+          badgeColor: GlobalVariables.primaryColor,
+          padding: EdgeInsets.all(5),
+        ),
+        child: iconWidget,
+      );
+    }
+
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? GlobalVariables.primaryColor.withOpacity(0.1)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(GlobalVariables.radiusFull),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            iconWidget,
+            if (isSelected) ...[
+              const SizedBox(width: 8),
+              Text(
+                label,
+                style: const TextStyle(
+                  color: GlobalVariables.primaryColor,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
                 ),
-                badgeStyle: badges.BadgeStyle(
-                    badgeColor: GlobalVariables.secondaryColor),
-                child: Container(
-                  width: bottomBarwidth,
-                  decoration: BoxDecoration(
-                      border: Border(
-                          top: BorderSide(
-                              color: _page == 2
-                                  ? GlobalVariables.selectedNavBarColor
-                                  : GlobalVariables.backgroundColor,
-                              width: bottomBarBorderWidth))),
-                  child: const Icon(Icons.shopping_cart_checkout_outlined),
-                ),
-              ))
-        ],
+              ),
+            ],
+          ],
+        ),
       ),
     );
   }

@@ -11,7 +11,7 @@ class AccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50),
+        preferredSize: const Size.fromHeight(56),
         child: AppBar(
           flexibleSpace: Container(
             decoration:
@@ -20,43 +20,72 @@ class AccountScreen extends StatelessWidget {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                alignment: Alignment.bottomLeft,
-                child: Image.asset(
-                  'assets/images/amazon_in.png',
-                  width: 120,
-                  height: 45,
-                  //color: Colors.black,
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.only(left: 15, right: 15),
-                child: Row(
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.only(right: 15),
-                      child: Icon(Icons.notifications_outlined),
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.2),
+                      borderRadius:
+                          BorderRadius.circular(GlobalVariables.radiusSm),
                     ),
-                    Icon(Icons.search_rounded)
-                  ],
-                ),
-              )
+                    child: Image.asset(
+                      'assets/images/amazon_in.png',
+                      width: 80,
+                      height: 30,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  _AppBarIcon(
+                    icon: Icons.notifications_outlined,
+                    onTap: () {},
+                  ),
+                  const SizedBox(width: 8),
+                  _AppBarIcon(
+                    icon: Icons.search_rounded,
+                    onTap: () {},
+                  ),
+                ],
+              ),
             ],
           ),
         ),
       ),
-      body: Column(
-        children: const [
-          BelowAppBar(),
-          SizedBox(
-            height: 10,
-          ),
-          TopBotton(),
-          SizedBox(
-            height: 20,
-          ),
-          Orders(),
-        ],
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          children: const [
+            BelowAppBar(),
+            SizedBox(height: 16),
+            TopBotton(),
+            SizedBox(height: 20),
+            Orders(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _AppBarIcon extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback onTap;
+  const _AppBarIcon({required this.icon, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.15),
+          borderRadius: BorderRadius.circular(GlobalVariables.radiusSm),
+        ),
+        child: Icon(icon, color: Colors.white, size: 20),
       ),
     );
   }

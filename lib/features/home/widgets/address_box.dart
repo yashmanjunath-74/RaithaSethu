@@ -1,4 +1,5 @@
 import 'package:RaithaSethu/providers/user_provider.dart';
+import 'package:RaithaSethu/constants/global_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,39 +10,57 @@ class AddressBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
     return Container(
-      height: 40,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Color.fromARGB(223, 38, 202, 60),
-            Color.fromARGB(224, 162, 236, 168)
-          ],
-          stops: [0.5, 1.0],
-        ),
+        gradient: GlobalVariables.addressBarGradient,
       ),
-      padding: const EdgeInsets.only(left: 10),
-      child: Row(children: [
-        const Icon(Icons.location_on_outlined),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 5),
-            child: Text(
-              'Delivery to ${user.name} - ${user.address}',
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-              ),
-              overflow: TextOverflow.ellipsis,
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(GlobalVariables.radiusSm),
+            ),
+            child: const Icon(
+              Icons.location_on_rounded,
+              color: Colors.white,
+              size: 18,
             ),
           ),
-        ),
-        const Padding(
-          padding: EdgeInsets.only(left: 5, top: 2, right: 5),
-          child: Icon(
-            Icons.arrow_drop_down_circle_outlined,
-            size: 25,
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Deliver to ${user.name}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                    color: Colors.white,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                if (user.address.isNotEmpty)
+                  Text(
+                    user.address,
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: Colors.white.withOpacity(0.8),
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+              ],
+            ),
           ),
-        ),
-      ]),
+          Icon(
+            Icons.keyboard_arrow_down_rounded,
+            color: Colors.white.withOpacity(0.8),
+            size: 22,
+          ),
+        ],
+      ),
     );
   }
 }

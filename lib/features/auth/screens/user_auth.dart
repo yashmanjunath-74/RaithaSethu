@@ -55,126 +55,210 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: GlobalVariables.surfaceColor,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          icon: Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(GlobalVariables.radiusMd),
+              boxShadow: GlobalVariables.softShadow,
+            ),
+            child: const Icon(Icons.arrow_back_ios_new_rounded,
+                size: 16, color: GlobalVariables.textPrimary),
+          ),
+          onPressed: () => Navigator.pop(context),
         ),
       ),
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: SafeArea(
-            child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                ' Welcome to Customer...',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image(
-                    image: AssetImage('assets/images/Customer.png'),
-                    height: 150,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 8),
+
+                // Hero Image
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: GlobalVariables.primaryColor.withOpacity(0.08),
+                    shape: BoxShape.circle,
                   ),
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: ListTile(
-                      title: const Text('Cretae an account',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      leading: Radio(
-                          activeColor: GlobalVariables.secondaryColor,
-                          value: Auth.signup,
-                          groupValue: groupValue,
-                          onChanged: (Auth? val) {
-                            setState(() {
-                              groupValue = val!;
-                            });
-                          }),
-                      onTap: () {},
+                  child: Image(
+                    image: const AssetImage('assets/images/Customer.png'),
+                    height: 100,
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // Title
+                const Text(
+                  'Welcome, Customer!',
+                  style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.w700,
+                    color: GlobalVariables.textPrimary,
+                    letterSpacing: -0.5,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'Sign in to access fresh produce directly from farmers',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: GlobalVariables.textSecondary,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+
+                const SizedBox(height: 24),
+
+                // Toggle Tabs
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius:
+                        BorderRadius.circular(GlobalVariables.radiusMd),
+                    boxShadow: GlobalVariables.softShadow,
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () =>
+                              setState(() => groupValue = Auth.signin),
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 200),
+                            padding: const EdgeInsets.symmetric(vertical: 14),
+                            decoration: BoxDecoration(
+                              color: groupValue == Auth.signin
+                                  ? GlobalVariables.primaryColor
+                                  : Colors.transparent,
+                              borderRadius: BorderRadius.circular(
+                                  GlobalVariables.radiusMd),
+                            ),
+                            child: Text(
+                              'Sign In',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 15,
+                                color: groupValue == Auth.signin
+                                    ? Colors.white
+                                    : GlobalVariables.textSecondary,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () =>
+                              setState(() => groupValue = Auth.signup),
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 200),
+                            padding: const EdgeInsets.symmetric(vertical: 14),
+                            decoration: BoxDecoration(
+                              color: groupValue == Auth.signup
+                                  ? GlobalVariables.primaryColor
+                                  : Colors.transparent,
+                              borderRadius: BorderRadius.circular(
+                                  GlobalVariables.radiusMd),
+                            ),
+                            child: Text(
+                              'Create Account',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 15,
+                                color: groupValue == Auth.signup
+                                    ? Colors.white
+                                    : GlobalVariables.textSecondary,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 24),
+
+                // Forms
+                if (groupValue == Auth.signup)
+                  Form(
+                    key: _signUpFormKey,
+                    child: Column(
+                      children: <Widget>[
+                        CustomTextfield(
+                          controller: _nameController,
+                          hintText: 'Full Name',
+                          prefixIcon: Icons.person_outline_rounded,
+                        ),
+                        const SizedBox(height: 14),
+                        CustomTextfield(
+                          controller: _emailController,
+                          hintText: 'Email Address',
+                          prefixIcon: Icons.email_outlined,
+                        ),
+                        const SizedBox(height: 14),
+                        CustomTextfield(
+                          controller: _passwordController,
+                          hintText: 'Password',
+                          prefixIcon: Icons.lock_outline_rounded,
+                        ),
+                        const SizedBox(height: 20),
+                        CustomButtton(
+                          text: 'Create Account',
+                          onTap: () {
+                            if (_signUpFormKey.currentState!.validate()) {
+                              signupUser();
+                            }
+                          },
+                        ),
+                      ],
                     ),
                   ),
-                  Expanded(
-                    child: ListTile(
-                      title: const Text('Sign in',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      leading: Radio(
-                          activeColor: GlobalVariables.secondaryColor,
-                          value: Auth.signin,
-                          groupValue: groupValue,
-                          onChanged: (Auth? val) {
-                            setState(() {
-                              groupValue = val!;
-                            });
-                          }),
-                      onTap: () {},
+                if (groupValue == Auth.signin)
+                  Form(
+                    key: _signInFormKey,
+                    child: Column(
+                      children: <Widget>[
+                        CustomTextfield(
+                          controller: _emailController,
+                          hintText: 'Email Address',
+                          prefixIcon: Icons.email_outlined,
+                        ),
+                        const SizedBox(height: 14),
+                        CustomTextfield(
+                          controller: _passwordController,
+                          hintText: 'Password',
+                          prefixIcon: Icons.lock_outline_rounded,
+                        ),
+                        const SizedBox(height: 20),
+                        CustomButtton(
+                          text: 'Sign In',
+                          onTap: () {
+                            if (_signInFormKey.currentState!.validate()) {
+                              signInuser();
+                            }
+                          },
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-              if (groupValue == Auth.signup)
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  child: Form(
-                      key: _signUpFormKey,
-                      child: Column(
-                        children: <Widget>[
-                          CustomTextfield(
-                              controller: _nameController, hintText: 'Name'),
-                          const SizedBox(height: 10),
-                          CustomTextfield(
-                              controller: _emailController, hintText: 'Email'),
-                          const SizedBox(height: 10),
-                          CustomTextfield(
-                              controller: _passwordController,
-                              hintText: 'Password'),
-                          const SizedBox(height: 10),
-                          CustomButtton(
-                              text: 'Sign up',
-                              onTap: () {
-                                if (_signUpFormKey.currentState!.validate()) {
-                                  signupUser();
-                                }
-                              })
-                        ],
-                      )),
-                ),
-              if (groupValue == Auth.signin)
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  child: Form(
-                      key: _signInFormKey,
-                      child: Column(
-                        children: <Widget>[
-                          CustomTextfield(
-                              controller: _emailController, hintText: 'Email'),
-                          const SizedBox(height: 10),
-                          CustomTextfield(
-                              controller: _passwordController,
-                              hintText: 'Password'),
-                          const SizedBox(height: 10),
-                          CustomButtton(
-                              text: 'Sign In',
-                              onTap: () {
-                                if (_signInFormKey.currentState!.validate()) {
-                                  signInuser();
-                                }
-                              })
-                        ],
-                      )),
-                ),
-            ],
+                const SizedBox(height: 24),
+              ],
+            ),
           ),
-        )),
+        ),
       ),
     );
   }

@@ -17,8 +17,6 @@ class AdminScreen extends StatefulWidget {
 
 class _AdminScreenState extends State<AdminScreen> {
   int _page = 0;
-  double bottomBarwidth = 48;
-  double bottomBarBorderWidth = 5;
 
   void updatepage(int page) {
     setState(() {
@@ -42,7 +40,7 @@ class _AdminScreenState extends State<AdminScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50),
+        preferredSize: const Size.fromHeight(56),
         child: AppBar(
           flexibleSpace: Container(
             decoration:
@@ -51,105 +49,157 @@ class _AdminScreenState extends State<AdminScreen> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                alignment: Alignment.bottomLeft,
-                child: Image.asset(
-                  'assets/images/logo.png',
-                  width: 100,
-                  height: 100,
-                  //color: Colors.black,
-                ),
-              ),
               Row(
                 children: [
                   Container(
-                    child: Text(
-                      'Farmer',
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.2),
+                      borderRadius:
+                          BorderRadius.circular(GlobalVariables.radiusSm),
+                    ),
+                    child: Image.asset(
+                      'assets/images/logo.png',
+                      width: 36,
+                      height: 36,
                     ),
                   ),
-                  Container(
-                    alignment: Alignment.bottomRight,
-                    child: IconButton(
-                      color: Colors.white,
-                      icon: const Icon(Icons.logout_outlined),
-                      onPressed: () {
-                        AccountServices().logOut(context);
-                      },
-                    ),
+                  const SizedBox(width: 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Farmer Dashboard',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        'Manage your produce',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.white.withOpacity(0.7),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
-              )
+              ),
+              GestureDetector(
+                onTap: () => AccountServices().logOut(context),
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.15),
+                    borderRadius:
+                        BorderRadius.circular(GlobalVariables.radiusSm),
+                  ),
+                  child: const Icon(Icons.logout_rounded,
+                      color: Colors.white, size: 20),
+                ),
+              ),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _page,
-        selectedItemColor: GlobalVariables.selectedNavBarColor,
-        unselectedItemColor: GlobalVariables.unselectedNavBarColor,
-        backgroundColor: GlobalVariables.backgroundColor,
-        iconSize: 28,
-        onTap: updatepage,
-        items: [
-          // POSTS
-          BottomNavigationBarItem(
-              label: '',
-              icon: Container(
-                width: bottomBarwidth,
-                decoration: BoxDecoration(
-                  border: Border(
-                    top: BorderSide(
-                        color: _page == 0
-                            ? GlobalVariables.selectedNavBarColor
-                            : GlobalVariables.backgroundColor,
-                        width: bottomBarBorderWidth),
-                  ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.06),
+              blurRadius: 20,
+              offset: const Offset(0, -4),
+            ),
+          ],
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _AdminNavItem(
+                  icon: Icons.inventory_2_rounded,
+                  label: 'Products',
+                  isSelected: _page == 0,
+                  onTap: () => updatepage(0),
                 ),
-                child: const Icon(Icons.home_outlined),
-              )
-              // ANALYTICS
-              ),
-          BottomNavigationBarItem(
-            label: '',
-            icon: Container(
-              width: bottomBarwidth,
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                      color: _page == 1
-                          ? GlobalVariables.selectedNavBarColor
-                          : GlobalVariables.backgroundColor,
-                      width: bottomBarBorderWidth),
+                _AdminNavItem(
+                  icon: Icons.analytics_rounded,
+                  label: 'Analytics',
+                  isSelected: _page == 1,
+                  onTap: () => updatepage(1),
                 ),
-              ),
-              child: const Icon(Icons.analytics_outlined),
+                _AdminNavItem(
+                  icon: Icons.receipt_long_rounded,
+                  label: 'Orders',
+                  isSelected: _page == 2,
+                  onTap: () => updatepage(2),
+                ),
+              ],
             ),
           ),
-          // Cart
-          BottomNavigationBarItem(
-            label: '',
-            icon: Container(
-              width: bottomBarwidth,
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                      color: _page == 2
-                          ? GlobalVariables.selectedNavBarColor
-                          : GlobalVariables.backgroundColor,
-                      width: bottomBarBorderWidth),
-                ),
-              ),
-              child: const Icon(Icons.all_inbox_outlined),
-            ),
-          ),
-        ],
+        ),
       ),
       body: ListPages[_page],
+    );
+  }
+}
+
+class _AdminNavItem extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _AdminNavItem({
+    required this.icon,
+    required this.label,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? GlobalVariables.primaryColor.withOpacity(0.1)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(GlobalVariables.radiusFull),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              icon,
+              size: 22,
+              color: isSelected
+                  ? GlobalVariables.primaryColor
+                  : GlobalVariables.unselectedNavBarColor,
+            ),
+            if (isSelected) ...[
+              const SizedBox(width: 8),
+              Text(
+                label,
+                style: const TextStyle(
+                  color: GlobalVariables.primaryColor,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
     );
   }
 }

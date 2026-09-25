@@ -1,24 +1,105 @@
 import 'package:flutter/material.dart';
 
-String uri =
-    'http://172.23.231.121:3001'; // Updated for new IPv4 address k  phone IP Adress
-// String uri = 'http://10.0.2.2:3001'; // Previous address for Android emulator
-// String uri = 'http://192.168.1.100:3001'; // Previous IP address
+// Current Wi-Fi IPv4 address for physical phone on same network:
+String uri = '';
+
+// Alternative: If connected via USB with "adb reverse tcp:3001 tcp:3001"
+// String uri = 'http://127.0.0.1:3001';
+
+// For Android emulator:
+// String uri = 'http://10.0.2.2:3001';
 
 class GlobalVariables {
+  // ── Premium Color Palette ──
+  static const Color primaryDark = Color(0xFF1B5E20);
+  static const Color primaryColor = Color(0xFF2E7D32);
+  static const Color primaryLight = Color(0xFF4CAF50);
+  static const Color accentColor = Color(0xFF66BB6A);
+  static const Color accentGold = Color(0xFFFFB300);
+  static const Color surfaceColor = Color(0xFFF5F7F5);
+  static const Color cardColor = Colors.white;
+  static const Color textPrimary = Color(0xFF1A1A2E);
+  static const Color textSecondary = Color(0xFF6B7280);
+  static const Color textLight = Color(0xFF9CA3AF);
+  static const Color dividerColor = Color(0xFFE5E7EB);
+  static const Color errorColor = Color(0xFFEF4444);
+  static const Color successColor = Color(0xFF10B981);
+
+  // ── Gradients ──
   static const appBarGradient = LinearGradient(
     colors: [
-      Color.fromARGB(255, 15, 182, 85),
-      Color.fromARGB(255, 102, 226, 108),
+      Color(0xFF1B5E20),
+      Color(0xFF2E7D32),
+      Color(0xFF388E3C),
     ],
-    stops: [0.5, 1.0],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
   );
 
-  static const secondaryColor = Color(0xFF3CB371);
-  static const backgroundColor = Colors.white;
-  static const Color greyBackgroundCOlor = Color(0xffebecee);
-  static var selectedNavBarColor = Colors.cyan[800]!;
-  static const unselectedNavBarColor = Colors.black87;
+  static const heroGradient = LinearGradient(
+    colors: [
+      Color(0xFF1B5E20),
+      Color(0xFF2E7D32),
+      Color(0xFF43A047),
+    ],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  );
+
+  static const cardGradient = LinearGradient(
+    colors: [
+      Color(0xFFE8F5E9),
+      Color(0xFFC8E6C9),
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  static const addressBarGradient = LinearGradient(
+    colors: [
+      Color(0xFF2E7D32),
+      Color(0xFF43A047),
+    ],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+  );
+
+  // ── Legacy aliases (keep backward compat) ──
+  static const secondaryColor = Color(0xFF2E7D32);
+  static const backgroundColor = Color(0xFFF5F7F5);
+  static const Color greyBackgroundCOlor = Color(0xFFF3F4F6);
+  static var selectedNavBarColor = const Color(0xFF1B5E20);
+  static const unselectedNavBarColor = Color(0xFF9CA3AF);
+
+  // ── Shadows ──
+  static List<BoxShadow> get softShadow => [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.06),
+          blurRadius: 12,
+          offset: const Offset(0, 4),
+        ),
+      ];
+
+  static List<BoxShadow> get cardShadow => [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.08),
+          blurRadius: 20,
+          offset: const Offset(0, 6),
+        ),
+      ];
+
+  // ── Border Radius ──
+  static const double radiusSm = 8.0;
+  static const double radiusMd = 12.0;
+  static const double radiusLg = 16.0;
+  static const double radiusXl = 24.0;
+  static const double radiusFull = 100.0;
+
+  // ── Spacing ──
+  static const double spaceSm = 8.0;
+  static const double spaceMd = 16.0;
+  static const double spaceLg = 24.0;
+  static const double spaceXl = 32.0;
 
   // STATIC IMAGES
   static const List<String> carouselImages = [

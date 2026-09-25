@@ -10,26 +10,43 @@ class AccountButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10),
-        height: 40,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50), color: Colors.white),
-        child: OutlinedButton(
-            style: ElevatedButton.styleFrom(
-              // ignore: deprecated_member_use
-              backgroundColor: GlobalVariables.secondaryColor.withOpacity(0.70),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50),
+        margin: const EdgeInsets.symmetric(horizontal: 8),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: onTap,
+            borderRadius:
+                BorderRadius.circular(GlobalVariables.radiusMd),
+            child: Container(
+              height: 44,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius:
+                    BorderRadius.circular(GlobalVariables.radiusMd),
+                border: Border.all(
+                  color: GlobalVariables.primaryColor.withOpacity(0.2),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.03),
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Center(
+                child: Text(
+                  text,
+                  style: const TextStyle(
+                    color: GlobalVariables.primaryColor,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                  ),
+                ),
               ),
             ),
-            onPressed: onTap,
-            child: Text(
-              text,
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            )),
+          ),
+        ),
       ),
     );
   }
